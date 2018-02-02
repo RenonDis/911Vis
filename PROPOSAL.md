@@ -5,7 +5,7 @@
 <table border="0">
   <tr>
     <td>
-      <img src="img/IMG_3241.JPG" style="width: 100px;">
+      <img src="img/IMG_3241.jpg" style="width: 100px;">
     </td>
   </tr>
   <tr>
@@ -20,7 +20,7 @@
 <table border="0">
   <tr>
     <td>
-      <img src="img/IMG_3241.JPG" style="width: 100px;">
+      <img src="img/IMG_3242.jpg" style="width: 100px;">
     </td>
   </tr>
   <tr>
