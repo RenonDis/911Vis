@@ -2,7 +2,7 @@
 
 Dataset disponible sur Kaggle : https://www.kaggle.com/mchirico/montcoalert
 
-## Aperçu du dataset 
+## Aperçu du dataset 
 
 <table border="0">
   <tr>
