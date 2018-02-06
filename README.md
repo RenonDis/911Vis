@@ -17,7 +17,7 @@ Quelle est la repartition:
   * Geographique
   * Catégorielle
 
-Des appels au 911 aux USA pour l'année 2015?
+Des appels au 911 aux USA entre décembre 2015 et mars 2017?
 
 ## Visualisations proposées
 
