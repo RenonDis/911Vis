@@ -11,8 +11,6 @@ Description dans [DATA.md](https://github.com/RenonDis/911Vis/blob/master/DATA.m
 
 ## Problème posé
 
-Design sheets dans [PROPOSAL.md](https://github.com/RenonDis/911Vis/blob/master/PROPOSAL.md)
-
 Quelle est la repartition:
 
   * Temporelle
@@ -44,3 +42,6 @@ Autres interactions :
     * Etat -> marqueur par commune pour type majoritaire
     * Commune -> discrétisation 
   * Reset de la carte + filtrage lorsqu'une autre action de filtrage est engagée 
+  
+Design sheets dans [PROPOSAL.md](https://github.com/RenonDis/911Vis/blob/master/PROPOSAL.md)
+
