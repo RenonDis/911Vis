@@ -12,26 +12,32 @@ Description dans [DATA.md](https://github.com/RenonDis/911Vis/blob/master/DATA.m
 ## Problème posé
 
 Quelle est la repartition:
+
   * Temporelle
   * Geographique
   * Catégorielle
+
 Des appels au 911 aux USA pour l'année 2015?
 
 ## Visualisations proposées
 
 Base :
+
   * Heatmap avec la densité d'appels par jour de l'année
   * Stacked Bar chart avec nombre moye d'appels par catégorie par heure
   * Geo Chart avec répartition des appels (densité par commune et marqueur pour type majoritaire? ou couleur pour type)
 
 Focus :
+
   * Pie chart bilevel avec les categories (1er niveau) et les incidents les plus courants par catégorie (second niveau)
   
-Filtre :
+Filtrage :
+
   * Catégorie (tick box)
   * Jour (en cliquant sur la heat map)
 
-Autres interactions
+Autres interactions :
+
   * Zoom sur la carte au niveau
     * Etat -> marqueur par commune pour type majoritaire
     * Commune -> discrétisation 
