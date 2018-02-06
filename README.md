@@ -11,6 +11,8 @@ Description dans [DATA.md](https://github.com/RenonDis/911Vis/blob/master/DATA.m
 
 ## Problème posé
 
+Design sheets dans [PROPOSAL.md](https://github.com/RenonDis/911Vis/blob/master/PROPOSAL.md)
+
 Quelle est la repartition:
 
   * Temporelle
