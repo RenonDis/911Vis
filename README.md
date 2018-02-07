@@ -25,7 +25,7 @@ Base :
 
   * Heatmap avec la densité d'appels par jour de l'année
   * Stacked Bar chart avec nombre moye d'appels par catégorie par heure
-  * Geo Chart avec répartition des appels (densité par commune et marqueur pour type majoritaire? ou couleur pour type)
+  * Geo Chart avec répartition des appels 
 
 Focus :
 
@@ -39,9 +39,10 @@ Filtrage :
 Autres interactions :
 
   * Zoom sur la carte au niveau
-    * Etat -> marqueur par commune pour type majoritaire
-    * Commune -> discrétisation 
+    * Etat 
+    * Commune 
+    * Quartier
   * Reset de la carte + filtrage lorsqu'une autre action de filtrage est engagée 
   
-Design sheets dans [PROPOSAL.md](https://github.com/RenonDis/911Vis/blob/master/PROPOSAL.md)
+**Détail des visualisations (design sheets):** [PROPOSAL.md](https://github.com/RenonDis/911Vis/blob/master/PROPOSAL.md)
 
