@@ -44,6 +44,8 @@ Si cette carte donne un bon aperçu de la répartition temporelle, nous pouvons 
 
 ## Third design sheet
 
+Nous ajouterons donc une interaction supplémentaire sur la carte : un zoom, qui permet de visualiser les données au niveau des communes (avec une vue de tout l'état séléctionné par clic sur la carte).
+
 <table border="0">
   <tr>
     <td>
@@ -57,7 +59,13 @@ Si cette carte donne un bon aperçu de la répartition temporelle, nous pouvons 
   </tr>
 </table>
 
+Cependant ici apparaissent les limites de la carte choroplèthe :
+* Le type d'incident majoritaire peut être le même pour une grande majorité d'états/commune
+* Cette carte perds tout intérêt lorsque l'on séléctionne un type d'incident en particulier
+
 ## Fourth design sheet
+
+Ainsi nous changerons la représentation géographique des données. Nous représenterons chaque appel par un point, de couleur différente pour chaque type d'incident.
 
 <table border="0">
   <tr>
@@ -72,7 +80,24 @@ Si cette carte donne un bon aperçu de la répartition temporelle, nous pouvons 
   </tr>
 </table>
 
+Au niveau du pays, les incidents de la route metterons en lumière les axes routiers dangereux mais les points formerons probablement des clusters denses dans les zones peuplées. Il faut donc permettre de zoomer.
+
+Il apparait aussi qu'il faut donner un comportement par défaut au stacked bar chart lorsque aucun jour n'est selectionné. La moyenne des appels par heure fera l'affaire.
+
 ## Fith design sheet
+
+Nous opterons finalement pour une carte zoomable à plusieurs niveaux :
+* Initial : pays
+* Etat (premier click)
+* Commune(Second click)
+* Quartier (Troisième click)
+* Double click pour retour en arrière
+
+La carte sera réinitialisée à chaque filtrage effctué sur le jour ou le type.
+
+A partir du niveau de zoom de la commune, les incidents seront associés à un tooltip donnant leur sous catégorie et l'heure à laquelle l'appel à été passé.
+
+Le focus sera lié à la sélection du type, du jour et de la plage géographique visible.
 
 <table border="0">
   <tr>
