@@ -54,7 +54,7 @@ Nous ajouterons donc une interaction supplémentaire sur la carte : un zoom, qui
   </tr>
   <tr>
     <td>
-      Second design sheet
+      Third design sheet
     </td>
   </tr>
 </table>
@@ -75,7 +75,7 @@ Ainsi nous changerons la représentation géographique des données. Nous repré
   </tr>
   <tr>
     <td>
-      Second design sheet
+      Fourth design sheet
     </td>
   </tr>
 </table>
@@ -107,7 +107,10 @@ Le focus sera lié à la sélection du type, du jour et de la plage géographiqu
   </tr>
   <tr>
     <td>
-      Second design sheet
+      Fith design sheet
     </td>
   </tr>
 </table>
+
+
+Cette visualisation permettra donc de visualiser finement la répartition géographique, temporelle et catégorielle des incidents.
