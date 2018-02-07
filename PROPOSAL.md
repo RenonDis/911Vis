@@ -29,3 +29,48 @@
     </td>
   </tr>
 </table>
+
+## Third design sheet
+
+<table border="0">
+  <tr>
+    <td>
+      <img src="img/design_sheet_3" style="width: 100px;">
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Second design sheet
+    </td>
+  </tr>
+</table>
+
+## Fourth design sheet
+
+<table border="0">
+  <tr>
+    <td>
+      <img src="img/design_sheet_4.jpg" style="width: 100px;">
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Second design sheet
+    </td>
+  </tr>
+</table>
+
+## Fith design sheet
+
+<table border="0">
+  <tr>
+    <td>
+      <img src="img/design_sheet_5.jpg" style="width: 100px;">
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Second design sheet
+    </td>
+  </tr>
+</table>
