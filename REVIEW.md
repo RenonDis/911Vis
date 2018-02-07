@@ -6,9 +6,7 @@ Projet à analyser : [Visualisation des resultats du Baccalauréat 2016](https:/
 
 ### Description du problème 
 
-La descritpion du problème est un peu vague. Il s'agit en effet de : 
-
-*'visualisation interactive des résultats du baccalauréat 2016 en France Métropolitaine dans les lycées d'enseignement général et technologique, au travers d'une carte choroplèthe'.* 
+La descritpion du problème est un peu vague. Il s'agit en effet de : *'Visualisation interactive des résultats du baccalauréat 2016 en France Métropolitaine dans les lycées d'enseignement général et technologique, au travers d'une carte choroplèthe'.* 
 
 Si cette défiition du problème fait bien ressortir l'aspect géographique de la visualisation, on ne sait cependant pas à quel découpage géographique nous pouvons nous attendre :
 * Région?
@@ -24,7 +22,7 @@ On ne sait ni précisément à quoi réfère le terme 'résultats'. S'agit-il :
 
 Ainsi le problème permet certes d'avoir une idée globale de la visualisation désirée mais il ne permet pas de cadrer précisément les éléments qui seront visualisés.
 
-Après analyse de la proposition de design, il serait plus judicieux de poser le problème sous la forme : *Quelles sont les disparités dans le taux de réussite au bac en fonction des départements, des filières et du type d'établissement?*
+Après analyse de la proposition de design, il serait plus judicieux de poser le problème sous la forme : *Visualisation des disparités dans le taux de réussite au bac en fonction des départements, des filières et du type d'établissement?*
 
 
 ### Choix des visualisations
