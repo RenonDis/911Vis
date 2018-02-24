@@ -21,13 +21,9 @@ var width = 960,
 
 var formatPercent = d3.format(".1%");
 
-var color = d3.scaleLinear()
-    .domain([0, 0.4, 0.7, 1])
-    .range(["white","#ffff99","green","black"]);
-
 var svg = d3.select("#heat")
   .selectAll("svg")
-  .data(d3.range(2015, 2018))
+  .data(d3.range(2016, 2018))
   .enter().append("svg")
     .attr("width", width)
     .attr("height", height)
@@ -92,7 +88,8 @@ var colorPick = {
     "Fire" : [0, 0.2, 0.5, 1],
 }
 
-primaryColors = ["white","#ffff99","green","black"];
+var primaryColors = ["white","#ffff99","green","black"];
+var categories = ["General", "Traffic", "Fire", "EMS"];
 
 var color = d3.scaleLinear()
     .domain(colorPick["General"])
@@ -171,19 +168,28 @@ d3.csv("911_clean.csv", function(error, csv) {
 
     function fillIn(category,csv) {
 
-        if (category != "General") {
-            csv = csv.filter(function(o) { return o.category === category; });
-        }
+        color.domain(colorPick["General"]);
+        getGradient("General");
 
-        color.domain(colorPick[category]);
-        getGradient(category);
+        switch (categories.indexOf(category)) {
+            case -1:
+                csv = csv.filter(function(o) { return o.description === category; });
+                break;
+            case 0:
+                break;
+            default:
+                csv = csv.filter(function(o) { return o.category === category; });
+                color.domain(colorPick[category]);
+                getGradient(category);
+        };
+
+        console.log(csv);
 
         var data = d3.nest()
             .key(function(d) { return d.date; })
             .rollup(function(day) { return day.length })
             .entries(csv)
 
-        console.log(data);
 
         console.log(d3.mean(data, function(d) { return d.value }));
 
@@ -224,7 +230,7 @@ d3.csv("911_clean.csv", function(error, csv) {
                 });
         };
 
-        fillIn("General",csv);
+        fillIn("VEHICLE ACCIDENT",csv);
 
         categories = ["General","Fire","EMS","Traffic"];
 
