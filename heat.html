@@ -86,7 +86,7 @@ linearGradient
     .attr("y2", "0%");
 
 var color = d3.scaleLinear()
-    .domain([0, 0.4, 0.7, 1])
+    .domain([0, 0.2, 0.5, 1])
     .range(["white","#ffff99","green","black"]);
 
 linearGradient.append("stop") 
@@ -94,11 +94,11 @@ linearGradient.append("stop")
     .attr("stop-color", "#fff");
 
 linearGradient.append("stop") 
-    .attr("offset", "40%")   
+    .attr("offset", "20%")   
     .attr("stop-color", "#ffff99");
 
 linearGradient.append("stop") 
-    .attr("offset", "90%")   
+    .attr("offset", "70%")   
     .attr("stop-color", "#green");
 
 linearGradient.append("stop") 
@@ -109,7 +109,7 @@ var legLength = 450;
 var offset = 2*cellSize;
 
 var legend = d3.select("svg:last-of-type")
-        .attr("height", 500)
+        .attr("height", 250)
 	.append("g")
         .attr("width", legLength)
         .attr("transform", "translate(" + ((-legLength+width)/2) + "," + cellSize * 10 + ")")
@@ -151,64 +151,79 @@ legend.append("text")
     .attr("text-anchor", "middle")
     .text("0");
 
+var maxLeg = legend.append("text")
+    .attr("transform", "translate(" + (legLength-25) + "," + (cellSize*2 + offset) + ")")
+    .attr("font-family", "sans-serif")
+    .attr("font-size", 10)
+    .attr("text-anchor", "middle")
 
 //Injecting data
 
 d3.csv("911_clean.csv", function(error, csv) {
     if (error) throw error;
 
-    var data = d3.nest()
-        .key(function(d) { return d.date; })
-        .rollup(function(day) { return day.length })
-        .entries(csv)
+    function fillIn(category,csv) {
 
-    console.log(data[0].key);
+        if (category != "General") {
+            csv = csv.filter(function(o) { return o.category === category; });
+        }
 
-    var maxcalls = 0
+        var data = d3.nest()
+            .key(function(d) { return d.date; })
+            .rollup(function(day) { return day.length })
+            .entries(csv)
 
-        data.forEach(function(day) {
-            if (day.value > maxcalls) {maxcalls = day.value;}
-        });
+        console.log(data);
 
-    console.log(maxcalls);
+        var maxcalls = 0
 
-    legend.append("text")
-        .attr("transform", "translate(" + (legLength-25) + "," + (cellSize*2 + offset) + ")")
-        .attr("font-family", "sans-serif")
-        .attr("font-size", 10)
-        .attr("text-anchor", "middle")
-        .text(maxcalls);
-    
-  rect.attr("fill", function(d) { 
-        var colorto;
-        data.forEach(function(day) {
-            if (day.key === d) {colorto = color(day.value/maxcalls);}
-        })
-      return colorto; 
-      })
-    .on("mouseover", function(d) {
-        console.log(d);
-        var ncall = 0;
-        data.forEach(function(day) {
-            if (day.key === d) {ncall = day.value}
-        });
-        console.log(ncall);
+            data.forEach(function(day) {
+                if (day.value > maxcalls) {maxcalls = day.value;}
+            });
 
-        tooltip2.text(d);
-        tooltip.text(ncall);
+        console.log(maxcalls);
 
-        gtooltip.transition()
-            .attr("transform", "translate(" + (25 + ncall/maxcalls*(legLength-50)) + "," + (cellSize) + ")")
+        maxLeg.text(maxcalls);
+        
+        rect.transition()
+            .attr("fill", function(d) { 
+                var colorto;
+                data.forEach(function(day) {
+                    if (day.key === d) {colorto = color(day.value/maxcalls);}
+                })
+                return colorto; })
+            
+            rect.on("mouseover", function(d) {
+                var ncall = 0;
+                data.forEach(function(day) {
+                    if (day.key === d) {ncall = day.value}
+                });
 
-        d3.select(this).classed("hover",true);
+                tooltip2.text(d);
+                tooltip.text(ncall);
+                
+                gtooltip.transition()
+                    .attr("transform", "translate(" + (25 + ncall/maxcalls*(legLength-50)) + "," + (cellSize) + ")")
+                
+                d3.select(this).classed("hover",true);
+                })
+            .on('mouseout', function() {
+                d3.select(this).classed("hover",false);
+                });
+        };
 
-        })
-    .on('mouseout', function() {
-        d3.select(this).classed("hover",false);
-        });
+        fillIn("Traffic",csv);
 
-    //.append("title")
-     // .text(function(d) { return d + ": " + formatPercent(data[d].value); });
+        categories = ["General","Fire","EMS","Traffic"];
+
+        categories.forEach( function(s,k) {
+            var button = document.createElement("button");
+            button.id = s;
+            button.innerHTML = s;
+            button.onclick = function() { fillIn(s,csv); }
+            document.getElementById('heat').appendChild(button);
+            });
+
 
     })
 
