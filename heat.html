@@ -85,25 +85,32 @@ linearGradient
     .attr("x2", "100%")
     .attr("y2", "0%");
 
+var colorPick = {
+    "General" : [0, 0.3, 0.6, 1],
+    "EMS" : [0, 0.6, 0.9, 1],
+    "Traffic" : [0, 0.1, 0.5, 1],
+    "Fire" : [0, 0.2, 0.5, 1],
+}
+
+primaryColors = ["white","#ffff99","green","black"];
+
 var color = d3.scaleLinear()
-    .domain([0, 0.2, 0.5, 1])
-    .range(["white","#ffff99","green","black"]);
+    .domain(colorPick["General"])
+    .range(primaryColors);
 
-linearGradient.append("stop") 
-    .attr("offset", "0%")   
-    .attr("stop-color", "#fff");
+function getGradient(c) {
 
-linearGradient.append("stop") 
-    .attr("offset", "20%")   
-    .attr("stop-color", "#ffff99");
+    linearGradient.selectAll("stop").remove();
 
-linearGradient.append("stop") 
-    .attr("offset", "70%")   
-    .attr("stop-color", "#green");
+    colorPick[c].forEach( function(v,k) {
+        var offset = String(v*100)+"%";
+        linearGradient.append("stop") 
+            .attr("offset", offset)   
+            .attr("stop-color", primaryColors[k]);
+        });
+};
 
-linearGradient.append("stop") 
-    .attr("offset", "100%")   
-    .attr("stop-color", "#000");
+getGradient("General");
 
 var legLength = 450;
 var offset = 2*cellSize;
@@ -168,12 +175,17 @@ d3.csv("911_clean.csv", function(error, csv) {
             csv = csv.filter(function(o) { return o.category === category; });
         }
 
+        color.domain(colorPick[category]);
+        getGradient(category);
+
         var data = d3.nest()
             .key(function(d) { return d.date; })
             .rollup(function(day) { return day.length })
             .entries(csv)
 
         console.log(data);
+
+        console.log(d3.mean(data, function(d) { return d.value }));
 
         var maxcalls = 0
 
@@ -212,7 +224,7 @@ d3.csv("911_clean.csv", function(error, csv) {
                 });
         };
 
-        fillIn("Traffic",csv);
+        fillIn("General",csv);
 
         categories = ["General","Fire","EMS","Traffic"];
 
