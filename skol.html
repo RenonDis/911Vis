@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<style>
+    path {
+      stroke: #fff;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      align-content: space-around;
+    }
+
+    .vizrow {
+      display: flex;
+      flex-flow: row wrap;
+      justify-content: space-around;
+      align-content: space-around;
+    }
+
+    .container {
+        flex-shrink: 1;
+    }
+
+    #sunburst {
+        background-color: red;
+        width: 300px;
+        height: 280px;
+    }
+
+    #heat {
+        background-color: blue;
+        width: 760px;
+        height: 280px;
+    }
+
+    #barchart {
+        background-color: green;
+        width: 440px; /* 400 */
+        height: 350px;
+    }
+
+    #map {
+        background-color: yellow;
+        width: 800px; /* 800 */
+        height: 400px; /* 550 */
+    }
+
+</style>
+
+<!-- HTML backbone -->
+
+<body>
+
+    <div class="vizrow">
+        <div id="sunburst" class="container">sunburst</div>
+        <div id="heat" class="container">heat</div>
+    </div>
+
+    <div class="vizrow">
+        <div id="barchart" class="container">barchart</div>
+        <div id="map" class="container">map</div>
+    </div>
+    
+</body>
+
+<script src="https://d3js.org/d3.v4.min.js"/>
+
+
+<!-- D3.js filling -->
+
+<script>
+
+</script>
+

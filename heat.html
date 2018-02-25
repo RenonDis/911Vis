@@ -15,9 +15,9 @@
     <body/>
     <div id="heat"/>
     <script>
-var width = 960,
-    height = 136,
-    cellSize = 17;
+var width = 760,
+    height = 100,
+    cellSize = 13;
 
 var formatPercent = d3.format(".1%");
 
@@ -113,10 +113,10 @@ var legLength = 450;
 var offset = 2*cellSize;
 
 var legend = d3.select("svg:last-of-type")
-        .attr("height", 250)
+        .attr("height", 180)
 	.append("g")
         .attr("width", legLength)
-        .attr("transform", "translate(" + ((-legLength+width)/2) + "," + cellSize * 10 + ")")
+        .attr("transform", "translate(" + ((-legLength+width)/2) + "," + cellSize * 9 + ")")
 
 legend.append("rect")
         .attr("stroke", "#ccc")
@@ -139,12 +139,12 @@ tooltip2 = gtooltip.append("text")
     .attr("font-family", "sans-serif")
     .attr("font-size", 10)
     .attr("text-anchor", "middle")
-    .attr("transform","translate(0,-20)")
-    .text("20-12-2010");
+    .attr("transform","translate(0,-15)")
+    .text("Hover the grid!");
 
 gtooltip.append("g").attr("id","arrowtool");
 
-var polyarrow = '<g transform="scale(0.3) translate(-50,-10)"> <polygon points="75,40.034 70.758,35.794 49.958,56.558 29.158,35.794 24.916,40.034 49.926,64.999 49.958,64.968 49.99,64.999 "></polygon></g>';
+var polyarrow = '<g transform="scale(0.2) translate(-50,-9)"> <polygon points="75,40.034 70.758,35.794 49.958,56.558 29.158,35.794 24.916,40.034 49.926,64.999 49.958,64.968 49.99,64.999 "></polygon></g>';
 
 document.getElementById("arrowtool").innerHTML = polyarrow;
 

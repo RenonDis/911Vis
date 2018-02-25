@@ -45,8 +45,8 @@ var radiusOff = 0.2;
 var arc = d3.arc()
     .startAngle(function(d) { return Math.max(0, Math.min(2 * Math.PI, x(d.x0))); })
     .endAngle(function(d) { return Math.max(0, Math.min(2 * Math.PI, x(d.x1))); })
-    .innerRadius(function(d) { return Math.max(0, y(d.y0-radiusOff)); })
-    .outerRadius(function(d) { return Math.max(0, y(d.y1-radiusOff)); });
+    .innerRadius(function(d) { return Math.max(0, y(d.y0))-40; })
+    .outerRadius(function(d) { return Math.max(0, y(d.y1))-30; });
 
 
 var svg = d3.select("#sunburst").append("svg")
