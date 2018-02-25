@@ -1,14 +1,13 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
 <style>
-path {
-  stroke: #fff;
-}
 </style>
 <body>
 <div id="sunburst"/>
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script>
+d3.csv("911_clean.csv", function(error, csv) {
+  if (error) throw error;
 
 var width = 300,
     height = 300,
@@ -57,8 +56,6 @@ var svg = d3.select("#sunburst").append("svg")
 
 var node;
 
-d3.csv("911_clean.csv", function(error, csv) {
-  if (error) throw error;
 
   function getFlatData(csv, date) { 
 
@@ -93,6 +90,7 @@ d3.csv("911_clean.csv", function(error, csv) {
   }
   
   function UpdateSun(date) {
+    var previousCategory = currentCategory;
 
     svg.selectAll("path").remove();
 
@@ -102,7 +100,11 @@ d3.csv("911_clean.csv", function(error, csv) {
     var totalCalls = flatData[0].value;
     var arcos = svg.selectAll("path").data(flatData)
 
+    //reseting zoom on General
+    if (previousCategory != "General") click(flatData[0]);
+
     arcos.enter().append("path")
+        .attr("stroke", "white")
         .attr("stroke-width", "3px")
         .style("fill", function(d) {
           if(d.children) {
@@ -131,19 +133,32 @@ d3.csv("911_clean.csv", function(error, csv) {
             }
         })
         .attrTween("d", arcTweenUpdate);
+
+    //zooming back to the previousCategory
+    if (previousCategory != "General") {
+        var categoryObject = flatData.filter(function(o) { return o.data.key === previousCategory })[0];
+        console.log("my",previousCategory);
+        click(categoryObject);
+    };
+
   }
+
+  var currentCategory = "General";
 
   UpdateSun();
 
   var thisDate ="2016-01-23"; 
   var button = document.createElement("button");
   button.innerHTML = thisDate;
-  button.onclick = function() { UpdateSun(thisDate); };
+  button.onclick = function() { UpdateSun(thisDate); 
+    console.log("click", currentCategory)};
   document.getElementById('sunburst').appendChild(button);
 
-});
-
 function click(d) {
+  currentCategory = d.data.key;
+
+  console.log("in",currentCategory);
+
   svg.transition()
       .duration(350)
       .tween("scale", function() {
@@ -154,6 +169,7 @@ function click(d) {
       })
     .selectAll("path")
       .attrTween("d", function(d) { return function() { return arc(d); }; });
+      return d.data.key;
 }
 
 function arcTweenUpdate(a,i) {
@@ -164,6 +180,8 @@ function arcTweenUpdate(a,i) {
     }
       return tween;
 }
+
+});
 
 </script>
 

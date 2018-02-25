@@ -15,6 +15,7 @@
     <body/>
     <div id="heat"/>
     <script>
+d3.csv("911_clean.csv", function(error, csv) {
 var width = 760,
     height = 100,
     cellSize = 13;
@@ -163,89 +164,88 @@ var maxLeg = legend.append("text")
 
 //Injecting data
 
-d3.csv("911_clean.csv", function(error, csv) {
-    if (error) throw error;
+if (error) throw error;
 
-    function fillIn(category,csv) {
+function fillIn(category,csv) {
 
-        color.domain(colorPick["General"]);
-        getGradient("General");
+    color.domain(colorPick["General"]);
+    getGradient("General");
 
-        switch (categories.indexOf(category)) {
-            case -1:
-                csv = csv.filter(function(o) { return o.description === category; });
-                break;
-            case 0:
-                break;
-            default:
-                csv = csv.filter(function(o) { return o.category === category; });
-                color.domain(colorPick[category]);
-                getGradient(category);
-        };
+    switch (categories.indexOf(category)) {
+        case -1:
+            csv = csv.filter(function(o) { return o.description === category; });
+            break;
+        case 0:
+            break;
+        default:
+            csv = csv.filter(function(o) { return o.category === category; });
+            color.domain(colorPick[category]);
+            getGradient(category);
+    };
 
-        console.log(csv);
+    console.log(csv);
 
-        var data = d3.nest()
-            .key(function(d) { return d.date; })
-            .rollup(function(day) { return day.length })
-            .entries(csv)
+    var data = d3.nest()
+        .key(function(d) { return d.date; })
+        .rollup(function(day) { return day.length })
+        .entries(csv)
 
 
-        console.log(d3.mean(data, function(d) { return d.value }));
+    console.log(d3.mean(data, function(d) { return d.value }));
 
-        var maxcalls = 0
+    var maxcalls = 0
 
+        data.forEach(function(day) {
+            if (day.value > maxcalls) {maxcalls = day.value;}
+        });
+
+    console.log(maxcalls);
+
+    maxLeg.text(maxcalls);
+    
+    rect.transition()
+        .attr("fill", function(d) { 
+            var colorto;
             data.forEach(function(day) {
-                if (day.value > maxcalls) {maxcalls = day.value;}
-            });
-
-        console.log(maxcalls);
-
-        maxLeg.text(maxcalls);
+                if (day.key === d) {colorto = color(day.value/maxcalls);}
+            })
+            return colorto; })
         
-        rect.transition()
-            .attr("fill", function(d) { 
-                var colorto;
-                data.forEach(function(day) {
-                    if (day.key === d) {colorto = color(day.value/maxcalls);}
-                })
-                return colorto; })
-            
-            rect.on("mouseover", function(d) {
-                var ncall = 0;
-                data.forEach(function(day) {
-                    if (day.key === d) {ncall = day.value}
-                });
-
-                tooltip2.text(d);
-                tooltip.text(ncall);
-                
-                gtooltip.transition()
-                    .attr("transform", "translate(" + (25 + ncall/maxcalls*(legLength-50)) + "," + (cellSize) + ")")
-                
-                d3.select(this).classed("hover",true);
-                })
-            .on('mouseout', function() {
-                d3.select(this).classed("hover",false);
-                });
-        };
-
-        fillIn("VEHICLE ACCIDENT",csv);
-
-        categories = ["General","Fire","EMS","Traffic"];
-
-        categories.forEach( function(s,k) {
-            var button = document.createElement("button");
-            button.id = s;
-            button.innerHTML = s;
-            button.onclick = function() { fillIn(s,csv); }
-            document.getElementById('heat').appendChild(button);
+        rect.on("mouseover", function(d) {
+            var ncall = 0;
+            data.forEach(function(day) {
+                if (day.key === d) {ncall = day.value}
             });
 
+            tooltip2.text(d);
+            tooltip.text(ncall);
+            
+            gtooltip.transition()
+                .attr("transform", "translate(" + (25 + ncall/maxcalls*(legLength-50)) + "," + (cellSize) + ")")
+            
+            d3.select(this).classed("hover",true);
+            })
+        .on('mouseout', function() {
+            d3.select(this).classed("hover",false);
+            });
+    };
 
-    })
+    fillIn("VEHICLE ACCIDENT",csv);
+
+    categories = ["General","Fire","EMS","Traffic"];
+
+    categories.forEach( function(s,k) {
+        var button = document.createElement("button");
+        button.id = s;
+        button.innerHTML = s;
+        button.onclick = function() { fillIn(s,csv); }
+        document.getElementById('heat').appendChild(button);
+        });
 
 
-    </script>
-    </body>
+})
+
+
+</script>
+</body>
 </html>
