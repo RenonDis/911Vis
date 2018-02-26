@@ -4,6 +4,8 @@
 </style>
 <body>
 <div id="sunburst"/>
+<script>var yoyo = "klkk"</script>
+<script src="kaka.js"></script>
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script>
 d3.csv("911_clean.csv", function(error, csv) {
@@ -101,7 +103,7 @@ var node;
     var arcos = svg.selectAll("path").data(flatData)
 
     //reseting zoom on General
-    if (previousCategory != "General") click(flatData[0]);
+    //if (previousCategory != "General") click(flatData[0]);
 
     arcos.enter().append("path")
         .attr("stroke", "white")
