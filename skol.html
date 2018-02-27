@@ -310,6 +310,14 @@ fillIn("General",csv);
 //listening to a catEvent
 document.addEventListener("catEvt", function(e) {console.log("updating heat to", e.detail); fillIn(e.detail,csv)});
 
+//listening to a reset event
+document.addEventListener("resetEvt", function(e) {
+    if (e.detail != "day") {
+        console.log("reseting heat to", e.detail); 
+        fillIn("General",csv);
+    };
+});
+
 }
 
 //----------
@@ -566,17 +574,16 @@ document.addEventListener("dayEvt", function(e) {
 var button = document.createElement("button");
 
 function click(d) {
-  //isDay is true (and existing) if a day is currently selected
+  //isDate is true (and existing) if a day is currently selected
+  var previousCategory = currentCategory;
+
+  //if click on same, toggle and go back to general view
+  d = (JSON.stringify(previousCategory) == JSON.stringify([d.data.key,d.data.value]) && !isDate) ? flatData[0] : d
 
   //send category event
   var catEvent = new CustomEvent('catEvt', { detail : d.data.key });
   //sending catEvent to other viz
   document.dispatchEvent(catEvent);
-
-  var previousCategory = currentCategory;
-
-  //if click on same, toggle and go back to general view
-  d = (JSON.stringify(previousCategory) == JSON.stringify([d.data.key,d.data.value]) && !isDate) ? flatData[0] : d
 
   isDate = false;
 
