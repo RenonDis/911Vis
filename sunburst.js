@@ -15,7 +15,9 @@ var width = 400,
     flatData, //keeping track of updated flattened data
     currentCategory = [], //key and value of current cat, for toggle check
     totalCalls, //total calls in the data, for reset purposes
-    isDate; //boolean to check if a date is set or not
+    isDate, //boolean to check if a date is set or not
+    transitionTime = 1000;
+
 
 var x = d3.scaleLinear().range([0, 2 * Math.PI]),
     y = d3.scaleSqrt().range([0, radius]);
@@ -196,10 +198,10 @@ function UpdateSun(date, isHeat) {
   var arcos = svg.selectAll("path").data(flatData);
 
   //saving old category for same zoom, or initialize
-  if (currentCategory.length > 0) {
+  if (currentCategory.data != null) {
       var previousCategory = currentCategory;
   } else {
-      currentCategory = ["General",totalCalls];
+      currentCategory = flatData[0];
   };
 
   arcos.enter().append("path")
@@ -222,8 +224,6 @@ function UpdateSun(date, isHeat) {
 
   var arcos = svg.selectAll("path").data(flatData)
 
-  var transitionTime = 1000;
-
   arcos.transition()
       .duration(transitionTime/4)
       .delay(function(d,i) {
@@ -236,11 +236,12 @@ function UpdateSun(date, isHeat) {
       .attrTween("d", arcTweenUpdate);
 
   //zooming back to the previousCategory
-  if (previousCategory && previousCategory[0] != "General") {
+  if (previousCategory && previousCategory.data.key != "General") {
+      if(date==="") { click(flatData[0]) } else {
+      //the previous category now is a different object we must retrieve
       var categoryObject = flatData.filter(function(o) { 
-          return (o.data.key == previousCategory[0]);
-      })[0];
-      click(categoryObject);
+        return o.data.key == previousCategory.data.key && o.parent.data.key == previousCategory.parent.data.key })[0];
+      click(categoryObject);};
   };
 
   //binding interactive legend
@@ -261,26 +262,21 @@ function click(d) {
   //isDate is true (and existing) if a day is currently selected
   var previousCategory = currentCategory;
 
-  console.log(d);
-
   //if click on same, toggle and go back to general view
-  d = (JSON.stringify(previousCategory) == JSON.stringify([d.data.key,d.data.value]) && !isDate) ? flatData[0] : d
+  d = (previousCategory == d && !isDate) ? flatData[0] : d
 
   //send category event
-  var catEvent = new CustomEvent('catEvt', { detail : d.data.key });
+  var catEvent = new CustomEvent('catEvt', { detail : d });
   //sending catEvent to other viz
   document.dispatchEvent(catEvent);
 
-  isDate = false;
-
-  currentCategory = [d.data.key,d.data.value];
+  currentCategory = d;
 
   //linking legend
-  var indexCat = categories.indexOf(currentCategory[0]);
+  var indexCat = categories.indexOf(d.data.key);
 
   if (indexCat === -1) {
-    descFocus.text(currentCategory[0]);
-    //var categoryChild = flatData.filter(function(o) {return (o.data.key == currentCategory[0] && o.data.value == currentCategory[1]) })[0];
+    descFocus.text(d.data.key);
     indexCat = categories.indexOf(d.parent.data.key)
   } else { descFocus.text(""); };
 
@@ -293,7 +289,7 @@ function click(d) {
   }
 
   svg.transition()
-      .duration(350)
+      .duration(transitionTime/3)
       .tween("scale", function() {
         var xd = d3.interpolate(x.domain(), [d.x0, d.x1]),
             yd = d3.interpolate(y.domain(), [d.y0, 1]),
@@ -302,7 +298,10 @@ function click(d) {
       })
     .selectAll("path")
       .attrTween("d", function(d) { return function() { return arc(d); }; });
-      return d.data.key;
+
+  isDate = false;
+
+//return d.data.key;
 }
 
 //arcTweenUpdate allows a smooth transition and building of sunburst
