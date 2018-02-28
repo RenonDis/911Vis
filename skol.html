@@ -7,6 +7,7 @@
     <script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
     <script type="text/javascript" src="heatmap.js"></script>
     <script type="text/javascript" src="sunburst.js"></script>
+    <script type="text/javascript" src="fullmap.js"></script>
 </head>
 
 <style>
@@ -47,7 +48,6 @@
     }
 
     #map {
-        background-color: yellow;
         width: 800px; /* 800 */
         height: 400px; /* 550 */
     }
@@ -76,12 +76,10 @@
         <div id="sunburst" class="container"></div>
         <div id="heat" class="container"></div>
     </div>
-<!--
     <div class="vizrow">
         <div id="barchart" class="container">barchart</div>
-        <div id="map" class="container">map</div>
+        <div id="map" class="container"></div>
     </div>
-    -->
 
 <script>
 d3.csv("911_clean.csv", function(error, csv) {
@@ -96,7 +94,7 @@ heatmap(csv);
 //SUNBURST
 sunburst(csv);
 
-//map(csv);
+map(csv);
 
 
 function barchart(csv) {}
