@@ -5,6 +5,7 @@
   <script src="https://d3js.org/d3.v4.min.js"></script>
  </head>
   <body>
+  <div id=map style="/*transform:rotate(-38deg);*/"></div>
 
 
 <script type="text/javascript">
@@ -14,7 +15,7 @@ var height = 500;
 
 var colormap={'EMS':'rgb(74, 189, 172)','Traffic':'rgb(255, 66, 26)','Fire':'rgb(251, 147, 33)'}
 //Create SVG element and append map to the SVG
-var svg = d3.select("body")
+var svg = d3.select("#map")
       .append("svg")
       .attr("width", width)
       .attr("height", height);
@@ -29,10 +30,12 @@ var g= d3.select("svg")
 d3.json("montgomery.json", function(json) {
 
 var center = d3.geoCentroid(json.features[0])
-var scale  = 45000;
+var scale  = 50000;
 var offset = [width/2, height/2];
+var rotate = [26.5,24.3,12.9];
+
 projection = d3.geoMercator().scale(scale).center(center)
-          .translate(offset);
+          .translate(offset).rotate(rotate);
 
 var path = d3.geoPath()              
              .projection(projection);        
@@ -52,18 +55,32 @@ g.selectAll("path")
 
 d3.csv("911_clean.csv", function(csv) {
 
+  console.log(csv);
+    
+  var bucket = d3.shuffle(csv);
+  var sampledCsv = []
+
+  while(sampledCsv.length < 20000) {
+    sampledCsv.push(bucket.pop());
+  }
+
+  console.log(sampledCsv);
+
   g.selectAll('dots')
-     .data(csv)
+     .data(sampledCsv)
      .enter()
      .append('circle')
      .attr("r", 2)
-     .attr("transform", function(d) {return "translate(" + projection([d.lng,d.lat]) + ")"})
+     .attr("transform", function(d) {
+        return "translate(" + projection([d.lng,d.lat]) + ")"
+        })
      .style("fill", function(d) { return colormap[d.category]; });
 
-    dots.append("title")
-    .text(function(d) {
-            return(d.date+' '+d.time+' '+d.category+': '+d.description)
-            });
+    //dots.append("title")
+    //.text(function(d) {
+    //        return(d.date+' '+d.time+' '+d.category+': '+d.description)
+    //        });
+
 });
 
 function zoom() {

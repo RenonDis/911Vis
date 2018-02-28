@@ -140,7 +140,8 @@ fillIn("General",csv);
 
 //listening to a catEvent
 document.addEventListener("catEvt", function(e) {
-    fillIn(e.detail,csv)
+    console.log("updating heatmap to", e.detail)
+    fillIn(e.detail.data.key,csv)
 });
 
 //listening to a reset event

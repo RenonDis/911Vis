@@ -261,6 +261,8 @@ function click(d) {
   //isDate is true (and existing) if a day is currently selected
   var previousCategory = currentCategory;
 
+  console.log(d);
+
   //if click on same, toggle and go back to general view
   d = (JSON.stringify(previousCategory) == JSON.stringify([d.data.key,d.data.value]) && !isDate) ? flatData[0] : d
 
@@ -278,8 +280,8 @@ function click(d) {
 
   if (indexCat === -1) {
     descFocus.text(currentCategory[0]);
-    var categoryChild = flatData.filter(function(o) {return (o.data.key == currentCategory[0] && o.data.value == currentCategory[1]) })[0];
-    indexCat = categories.indexOf(categoryChild.parent.data.key)
+    //var categoryChild = flatData.filter(function(o) {return (o.data.key == currentCategory[0] && o.data.value == currentCategory[1]) })[0];
+    indexCat = categories.indexOf(d.parent.data.key)
   } else { descFocus.text(""); };
 
   if (indexCat === 0) { 
