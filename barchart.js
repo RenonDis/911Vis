@@ -5,6 +5,7 @@ var barday="";
 var barstate="General";
 var barsubstate="General";
 
+var transtime=500;
 
 function filterDate(csv, date){
   
@@ -132,7 +133,6 @@ function initAxis(){
   var width = 440 - margin.left-margin.right;
   var height = 350 - margin.top-margin.bottom;
 
-
   svg.append("g") 
       .attr("class", "Xbaraxis")
       .attr("transform", "translate(" + margin.left + "," + (margin.top+height) + ")")
@@ -199,9 +199,9 @@ function barchart(stacked) { //TODO :  reset
   ybar.domain([0,m+0.1*m])
   svg.select(".Ybaraxis")
         .transition()
-        .duration(1000)
+        .duration(transtime)
         .call(d3.axisLeft(ybar))
-  
+
   var colorRanges = {} //dict avec "categorie"=>"fctScale"
 
  var categories = ["General", "Traffic", "Fire", "EMS"];
@@ -266,8 +266,8 @@ function barchart(stacked) { //TODO :  reset
 
   //bars          
   rect.transition()
-      .duration(1000)
-      .delay(function(d, i) { return 800 - i * 80; })
+      .duration(transtime)
+      .delay(function(d, i) { return transtime-i*Math.floor(transtime/24); })
       .attr("y", function(d) {return ybar(d[1]);})
       .attr("height", function(d) {return ybar(d[0]) - ybar(d[1]);})
 }
@@ -295,8 +295,7 @@ initAxis() //call after barchart() so that axis are in front
 
 //listening to a catEvent
 document.addEventListener("catEvt", function(e) {
-    console.log('catEvt');
-    console.log(e.detail);
+
 
     stacked=filterDate(csv,barday)
     var cat;
@@ -320,17 +319,15 @@ document.addEventListener("catEvt", function(e) {
     }
     stacked=getdata(stacked,cat,subcat) 
     barchart(stacked)
-    console.log(barstate,barsubstate)
+
 
 
 });
 
 
 document.addEventListener("dayEvt", function(e) {
-    console.log('dayEvt')
-    console.log(e.detail)
+
     stacked=filterDate(csv,e.detail)
-    console.log(barstate,barsubstate)
     stacked=getdata(stacked,barstate,barsubstate)
     barchart(stacked)
 
