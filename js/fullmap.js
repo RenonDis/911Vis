@@ -74,7 +74,7 @@ function initMapSpace()
 
   var scale  = 50000;
 
-  d3.csv("roads.txt", function(data) {
+  d3.csv("data/roads.txt", function(data) {
 
   var offset = [width/2, height/2];
   var rotation = [26.5,24.3,12.9];
@@ -93,7 +93,7 @@ function initMapSpace()
   });
 
 
-  d3.json("montgomery.json", function(json) {
+  d3.json("data/montgomery.json", function(json) {
 
   var center = d3.geoCentroid(json.features[0])
   var offset = [width/2, height/2];
@@ -120,7 +120,7 @@ function initMapSpace()
 
 function draw(csv){
 
-  d3.json("montgomery.json", function(json) {
+  d3.json("data/montgomery.json", function(json) {
 
     var center = d3.geoCentroid(json.features[0])
     var scale  = 50000;
