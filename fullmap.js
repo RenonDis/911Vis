@@ -159,7 +159,7 @@ function draw(csv){
                .enter()
                .append('circle')
                .attr('class','dot')
-               .attr("r", 2)
+               .attr("r", 3)
                .attr("transform", function(d) {
                   return "translate(" + projection([d.lng,d.lat]) + ")"
                   })
@@ -171,10 +171,10 @@ function draw(csv){
           .delay(function(d,i) { return i*Math.floor(transtime/finalLength) })
           .style("fill", function(d) { return colormap[d.category]; });
 
-      //dots.append("title")
-      //.text(function(d) {
-      //        return(d.date+' '+d.time+' '+d.category+': '+d.description)
-      //        });
+      dots.append("title")
+      .text(function(d) {
+              return(d.date+' '+d.time+' '+d.category+': '+d.description)
+              });
   });
 
 }
