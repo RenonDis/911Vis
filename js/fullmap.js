@@ -1,12 +1,10 @@
 function map(csv) {
   // parameters
-var width = 960;
+var width = 800;
 var height = 500;
 var mapday="";
 var mapstate="General";
 var mapsubstate="General";
-var colormap={'EMS':'rgb(74, 189, 172)','Traffic':'rgb(255, 66, 26)','Fire':'rgb(251, 147, 33)'};
-var transtime=500;
 var maxLength=3000;
 
 
@@ -74,9 +72,10 @@ function initMapSpace()
       .scaleExtent([1, 8])
       .on("zoom", zoom))
 
+  var scale  = 50000;
+
   d3.csv("roads.txt", function(data) {
 
-  var scale  = 45000;
   var offset = [width/2, height/2];
   var rotation = [26.5,24.3,12.9];
 
@@ -88,7 +87,7 @@ function initMapSpace()
       .style("stroke", "grey")
       .style("stroke-width", "0.75")
       .attr('fill','None')
-      .attr('transform',"scale(0.8) translate(-"+37+","+25+") rotate(-"+36+")")
+      .attr('transform',"scale(0.89) translate(-"+189+",-"+8+") rotate(-"+36+")")
 
 
   });
@@ -97,7 +96,6 @@ function initMapSpace()
   d3.json("montgomery.json", function(json) {
 
   var center = d3.geoCentroid(json.features[0])
-  var scale  = 45000;
   var offset = [width/2, height/2];
   var rotation = [26.5,24.3,12.9];
 
@@ -125,7 +123,7 @@ function draw(csv){
   d3.json("montgomery.json", function(json) {
 
     var center = d3.geoCentroid(json.features[0])
-    var scale  = 45000;
+    var scale  = 50000;
     var offset = [width/2, height/2];
     var rotation = [26.5,24.3,12.9];
 
@@ -167,9 +165,10 @@ function draw(csv){
 
 
       dots.transition()
-          .duration(transtime)
-          .delay(function(d,i) { return i*Math.floor(transtime/finalLength) })
-          .style("fill", function(d) { return colormap[d.category]; });
+          .delay(function(d,i) { return i*0.6*(transitionTime/finalLength) })
+          .style("fill", function(d) { 
+            return primaryColors[categories.indexOf(d.category)]; 
+            });
 
       dots.append("title")
       .text(function(d) {
