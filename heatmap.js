@@ -9,6 +9,7 @@ var width = 760,
     height = 100,
     cellSize = 13,
     formatPercent = d3.format(".1%"),
+    delayFill = 3, //factor of fill propagation (0 = instant)
     legLength = 450, //width of legend
     offset = 2*cellSize; //offset of legend from the time map
 
@@ -215,6 +216,7 @@ function fillIn(category,csv) {
     maxLeg.text(maxcalls);
     
     rect.transition()
+        .delay(function(d,i) {return i*delayFill;})
         .attr("fill", function(d) { 
             var colorto;
             data.forEach(function(day) {

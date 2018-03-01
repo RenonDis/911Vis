@@ -8,6 +8,7 @@
     <script type="text/javascript" src="heatmap.js"></script>
     <script type="text/javascript" src="sunburst.js"></script>
     <script type="text/javascript" src="fullmap.js"></script>
+    <script type="text/javascript" src="barchart.js"></script>
 </head>
 
 <style>
@@ -42,7 +43,6 @@
     }
 
     #barchart {
-        background-color: green;
         width: 440px; /* 400 */
         height: 350px;
     }
@@ -77,7 +77,7 @@
         <div id="heat" class="container"></div>
     </div>
     <div class="vizrow">
-        <div id="barchart" class="container">barchart</div>
+        <div id="barchart" class="container"></div>
         <div id="map" class="container"></div>
     </div>
 
@@ -94,10 +94,13 @@ heatmap(csv);
 //SUNBURST
 sunburst(csv);
 
+//----------
+//GEOMAP
 map(csv);
 
-
-function barchart(csv) {}
+//----------
+//BARCHART
+barchart(csv);
 
 });
 </script>

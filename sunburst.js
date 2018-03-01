@@ -16,7 +16,7 @@ var width = 400,
     currentCategory = [], //key and value of current cat, for toggle check
     totalCalls, //total calls in the data, for reset purposes
     isDate, //boolean to check if a date is set or not
-    transitionTime = 1000;
+    transitionTime = 1200;
 
 
 var x = d3.scaleLinear().range([0, 2 * Math.PI]),
@@ -289,7 +289,7 @@ function click(d) {
   }
 
   svg.transition()
-      .duration(transitionTime/3)
+      .duration(transitionTime/2)
       .tween("scale", function() {
         var xd = d3.interpolate(x.domain(), [d.x0, d.x1]),
             yd = d3.interpolate(y.domain(), [d.y0, 1]),
