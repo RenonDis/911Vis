@@ -2,9 +2,6 @@ function sunburst(csv) {
 
 //defining useful var
 
-var categories = ["General", "Traffic", "Fire", "EMS"];
-var primaryColors = ["white","rgb(255, 66, 26)", "rgb(251, 147, 33)" , "rgb(74, 189, 172)"];
-
 var width = 400,
     height = 280,
     widthOff = width - height,
@@ -15,9 +12,7 @@ var width = 400,
     flatData, //keeping track of updated flattened data
     currentCategory = [], //key and value of current cat, for toggle check
     totalCalls, //total calls in the data, for reset purposes
-    isDate, //boolean to check if a date is set or not
-    transitionTime = 1000;
-
+    isDate; //boolean to check if a date is set or not
 
 var x = d3.scaleLinear().range([0, 2 * Math.PI]),
     y = d3.scaleSqrt().range([0, radius]);
@@ -27,14 +22,6 @@ var x = d3.scaleLinear().range([0, 2 * Math.PI]),
 var color = d3.scaleOrdinal()
   .domain(categories)
   .range(primaryColors);
-
-var colorRanges = {}
-
-primaryColors.forEach( function(disColor,key) {
-    colorRanges[categories[key]] = d3.scaleLinear()
-        .domain([-0.6, 1])
-        .range(["white", disColor]);
-    });
 
 //core structural defs
 
@@ -225,12 +212,12 @@ function UpdateSun(date, isHeat) {
   var arcos = svg.selectAll("path").data(flatData)
 
   arcos.transition()
-      .duration(transitionTime/4)
+      .duration(transitionTime/8)
       .delay(function(d,i) {
           if (categories.indexOf(d.data.key) === -1) {
-              return (((d.data.value/totalCalls)/2)+1)*transitionTime;
+              return (((d.data.value/totalCalls)/2)+0.4)*transitionTime;
           } else {
-              return i*transitionTime/4;
+              return (i-1)*transitionTime/7;
           }
       })
       .attrTween("d", arcTweenUpdate);
@@ -289,7 +276,7 @@ function click(d) {
   }
 
   svg.transition()
-      .duration(transitionTime/3)
+      .duration(transitionTime/2)
       .tween("scale", function() {
         var xd = d3.interpolate(x.domain(), [d.x0, d.x1]),
             yd = d3.interpolate(y.domain(), [d.y0, 1]),

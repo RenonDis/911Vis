@@ -5,7 +5,7 @@ var barday="";
 var barstate="General";
 var barsubstate="General";
 
-var transtime=500;
+var transtime=transitionTime/3;
 
 function filterDate(csv, date){
   
@@ -201,18 +201,6 @@ function barchart(stacked) { //TODO :  reset
         .transition()
         .duration(transtime)
         .call(d3.axisLeft(ybar))
-
-  var colorRanges = {} //dict avec "categorie"=>"fctScale"
-
- var categories = ["General", "Traffic", "Fire", "EMS"];
- var primaryColors = ["white","rgb(255, 66, 26)", "rgb(251, 147, 33)" , "rgb(74, 189, 172)"];
-
-  primaryColors.forEach( function(disColor,key) {
-      colorRanges[categories[key]] = d3.scaleLinear()
-          .domain([-0.6, 1])
-          .range(["white", disColor]);
-      });
-
 
   var z = d3.scaleLinear()
             .range(['white','black'])

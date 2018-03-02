@@ -5,9 +5,10 @@
     <meta charset="utf-8">
     <title>911 Data Visualization</title>
     <script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
-    <script type="text/javascript" src="heatmap.js"></script>
-    <script type="text/javascript" src="sunburst.js"></script>
-    <script type="text/javascript" src="fullmap.js"></script>
+    <script type="text/javascript" src="js/heatmap.js"></script>
+    <script type="text/javascript" src="js/sunburst.js"></script>
+    <script type="text/javascript" src="js/fullmap.js"></script>
+    <script type="text/javascript" src="js/barchart.js"></script>
 </head>
 
 <style>
@@ -31,7 +32,6 @@
     }
 
     #sunburst {
-        /*background-color: rgb(255,200,255);*/
         width: 400px;
         height: 280px;
     }
@@ -42,14 +42,13 @@
     }
 
     #barchart {
-        background-color: green;
-        width: 440px; /* 400 */
+        width: 440px; 
         height: 350px;
     }
 
     #map {
-        width: 800px; /* 800 */
-        height: 400px; /* 550 */
+        width: 800px; 
+        height: 350px;
     }
 
     /* style for heatmap */
@@ -77,14 +76,33 @@
         <div id="heat" class="container"></div>
     </div>
     <div class="vizrow">
-        <div id="barchart" class="container">barchart</div>
+        <div id="barchart" class="container"></div>
         <div id="map" class="container"></div>
     </div>
 
 <script>
-d3.csv("911_clean.csv", function(error, csv) {
+
+//----------
+//GLOBAL PARAMETERS
+const transitionTime = 2000,
+    categories = ["General", "Traffic", "Fire", "EMS"],
+    primaryColors = ["white","rgb(255, 66, 26)", "rgb(251, 147, 33)" , "rgb(74, 189, 172)"];
+
+var colorRanges = {}
+
+primaryColors.forEach( function(disColor,key) {
+    colorRanges[categories[key]] = d3.scaleLinear()
+        .domain([-0.6, 1])
+        .range(["white", disColor]);
+});
+
+
+//----------
+//LOADING DATA
+d3.csv("data/911_clean.csv", function(error, csv) {
 
 if (error) throw error;
+
 
 //----------
 //HEATMAP
@@ -94,10 +112,13 @@ heatmap(csv);
 //SUNBURST
 sunburst(csv);
 
+//----------
+//GEOMAP
 map(csv);
 
-
-function barchart(csv) {}
+//----------
+//BARCHART
+barchart(csv);
 
 });
 </script>
