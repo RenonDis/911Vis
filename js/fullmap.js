@@ -71,7 +71,7 @@ function initMapSpace()
 
     g = svg.append("g")
 
-    d3.csv("roads.txt", function(data) {
+    d3.csv("data/roads.txt", function(data) {
 
     var scale  = 45000;
     var offset = [width/2, height/2];
@@ -89,7 +89,7 @@ function initMapSpace()
     });
 
 
-    d3.json("montgomery.json", function(json) {
+    d3.json("data/montgomery.json", function(json) {
 
     var center = d3.geoCentroid(json.features[0])
     var scale  = 45000;
@@ -117,7 +117,7 @@ function initMapSpace()
 
 function draw(csv){
 
-  d3.json("montgomery.json", function(json) {
+  d3.json("data/montgomery.json", function(json) {
 
     var center = d3.geoCentroid(json.features[0])
     var scale  = 45000;
