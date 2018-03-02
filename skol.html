@@ -25,6 +25,7 @@
       flex-flow: row wrap;
       justify-content: space-around;
       align-content: space-around;
+      font-family: Sans;
     }
 
     .container {
@@ -65,6 +66,11 @@
         cursor: pointer;
     }
 
+    #titleViz {
+        width: 600px;
+        margin-bottom:1em;
+    }
+
 </style>
 
 <!-- HTML backbone -->
@@ -74,6 +80,11 @@
     <div class="vizrow">
         <div id="sunburst" class="container"></div>
         <div id="heat" class="container"></div>
+    </div>
+    <div class="vizrow">
+        <div id="titleViz">
+            911 calls in Montgomery County
+        </div>
     </div>
     <div class="vizrow">
         <div id="barchart" class="container"></div>

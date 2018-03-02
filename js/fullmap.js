@@ -1,7 +1,7 @@
 function map(csv) {
   // parameters
 var width = 800;
-var height = 500;
+var height = 350;
 var mapday="";
 var mapstate="General";
 var mapsubstate="General";
@@ -96,7 +96,7 @@ function initMapSpace()
   d3.json("data/montgomery.json", function(json) {
 
   var center = d3.geoCentroid(json.features[0])
-  var offset = [width/2, height/2];
+  var offset = [width/2, height/2+globalVOff];
   var rotation = [26.5,24.3,12.9];
 
   projection = d3.geoMercator().scale(scale).center(center)
@@ -118,13 +118,15 @@ function initMapSpace()
   });  
 }
 
+var globalVOff = 78;
+
 function draw(csv){
 
   d3.json("data/montgomery.json", function(json) {
 
     var center = d3.geoCentroid(json.features[0])
     var scale  = 50000;
-    var offset = [width/2, height/2];
+    var offset = [width/2, height/2+globalVOff];
     var rotation = [26.5,24.3,12.9];
 
     projection = d3.geoMercator().scale(scale).center(center)
