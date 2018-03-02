@@ -147,67 +147,6 @@ function draw(csv){
       sampledCsv=csv
     }
 
-    });
-
-
-    d3.json("montgomery.json", function(json) {
-
-    var center = d3.geoCentroid(json.features[0])
-    var scale  = 45000;
-    var offset = [width/2, height/2+globalDiff];
-    var rotation = [26.5,24.3,12.9];
-
-    projection = d3.geoMercator().scale(scale).center(center)
-        .rotate(rotation)
-        .translate(offset);
-
-    var path = d3.geoPath()              
-                 .projection(projection);        
-    // Bind the data to the SVG and create one path per GeoJSON feature
-    g.selectAll(".data")
-      .data(json.features)
-      .enter()
-      .append("path")
-      .attr("d", path)
-      .style("stroke", "grey")
-      .style("stroke-width", "0.75")
-      .attr('fill','None')
-      //.attr('transform',function(d) {var t = path.centroid(d.geometry);return "translate(" + [-t[0]/2,t[1]/2] + ")"} );
-    }); 
-  }
-
-function draw(csv){
-
-  d3.json("montgomery.json", function(json) {
-
-    var center = d3.geoCentroid(json.features[0])
-    var scale  = 45000;
-    var offset = [width/2, height/2+globalDiff];
-    var rotation = [26.5,24.3,12.9];
-
-    projection = d3.geoMercator().scale(scale).center(center)
-        .rotate(rotation)
-        .translate(offset);
-
-    d3.selectAll('.dot').remove()
-    
-    var sampledCsv;
-
-    if(csv.length>maxLength)
-    {
-      console.log('sampling');
-      var bucket = d3.shuffle(csv);
-      sampledCsv = []
-        while(sampledCsv.length < maxLength) {
-      sampledCsv.push(bucket.pop());
-      }
-    }
-    else
-    {
-      console.log('no sampling')
-      sampledCsv=csv
-    }
-
     finalLength=sampledCsv.length;
     
     var dots =g.selectAll('dots')
