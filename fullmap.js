@@ -1,15 +1,15 @@
 function map(csv) {
   // parameters
-var width = 960;
-var height = 500;
+var width = 800;
+var height = 350;
 var mapday="";
 var mapstate="General";
 var mapsubstate="General";
 var colormap={'EMS':'rgb(74, 189, 172)','Traffic':'rgb(255, 66, 26)','Fire':'rgb(251, 147, 33)'};
 var transtime=500;
 var maxLength=3000;
-
-
+var mapzoom='inactive';
+var globalDiff=78;
 //Create SVG element and append map to the SVG
 
 //d3.xml("thinnerGreyMap.svg").mimeType("image/svg+xml").get(function(error, xml) {
@@ -60,65 +60,60 @@ function getdata(csv,category, subcategory){ //subcategory filled only if catego
 }
 
 var g;
+var svg;
 
 function initMapSpace()
-{
-  var svg = d3.select("#map")
-        .append("svg")
-        .attr("width", width)
-        .attr("height", height);
-          
-  g = svg
-      .append("g")
-      .call(d3.zoom()
-      .scaleExtent([1, 8])
-      .on("zoom", zoom))
+  {
+    svg = d3.select("#map")
+          .append("svg")
+          .attr("width", width)
+          .attr("height", height);
 
-  d3.csv("roads.txt", function(data) {
+    g = svg.append("g")
 
-  var scale  = 45000;
-  var offset = [width/2, height/2];
-  var rotation = [26.5,24.3,12.9];
+    d3.csv("roads.txt", function(data) {
+
+    var scale  = 45000;
+    var offset = [width/2, height/2];
+    var rotation = [26.5,24.3,12.9];
+
+    g.append('path')
+        .attr('class','roads')
+        .attr("d", data.columns[0])
+        .style("stroke", "grey")
+        .style("stroke-width", "0.75")
+        .attr('fill','None')
+        .attr('transform',"scale(0.8) translate(-"+137+","+25+") rotate(-"+36+")")
 
 
-  console.log(data)
-  g.append('path')
-      .attr('class','roads')
-      .attr("d", data.columns[0])
+    });
+
+
+    d3.json("montgomery.json", function(json) {
+
+    var center = d3.geoCentroid(json.features[0])
+    var scale  = 45000;
+    var offset = [width/2, height/2+globalDiff];
+    var rotation = [26.5,24.3,12.9];
+
+    projection = d3.geoMercator().scale(scale).center(center)
+        .rotate(rotation)
+        .translate(offset);
+
+    var path = d3.geoPath()              
+                 .projection(projection);        
+    // Bind the data to the SVG and create one path per GeoJSON feature
+    g.selectAll(".data")
+      .data(json.features)
+      .enter()
+      .append("path")
+      .attr("d", path)
       .style("stroke", "grey")
       .style("stroke-width", "0.75")
       .attr('fill','None')
-      .attr('transform',"scale(0.8) translate(-"+37+","+25+") rotate(-"+36+")")
-
-
-  });
-
-
-  d3.json("montgomery.json", function(json) {
-
-  var center = d3.geoCentroid(json.features[0])
-  var scale  = 45000;
-  var offset = [width/2, height/2];
-  var rotation = [26.5,24.3,12.9];
-
-  projection = d3.geoMercator().scale(scale).center(center)
-      .rotate(rotation)
-      .translate(offset);
-
-  var path = d3.geoPath()              
-               .projection(projection);        
-  // Bind the data to the SVG and create one path per GeoJSON feature
-  g.selectAll(".data")
-    .data(json.features)
-    .enter()
-    .append("path")
-    .attr("d", path)
-    .style("stroke", "grey")
-    .style("stroke-width", "0.75")
-    .attr('fill','None')
-    //.attr('transform',function(d) {var t = path.centroid(d.geometry);return "translate(" + [-t[0]/2,t[1]/2] + ")"} );
-  });  
-}
+      //.attr('transform',function(d) {var t = path.centroid(d.geometry);return "translate(" + [-t[0]/2,t[1]/2] + ")"} );
+    }); 
+  }
 
 function draw(csv){
 
@@ -126,7 +121,7 @@ function draw(csv){
 
     var center = d3.geoCentroid(json.features[0])
     var scale  = 45000;
-    var offset = [width/2, height/2];
+    var offset = [width/2, height/2+globalDiff];
     var rotation = [26.5,24.3,12.9];
 
     projection = d3.geoMercator().scale(scale).center(center)
@@ -175,14 +170,106 @@ function draw(csv){
       .text(function(d) {
               return(d.date+' '+d.time+' '+d.category+': '+d.description)
               });
+
   });
+
 
 }
 
+ //grid for zoom on click  
+function buildGrid(gridData){
+
+  d3.selectAll('.row').remove()
+
+  var row = g.selectAll(".row")
+    .data(gridData)
+    .enter().append("g")
+    .attr("class", "row")
+
+
+  //PUT MAP FIRST IN SKOL
+  var column = row.selectAll(".square")
+  .data(function(d) { return d; })
+  .enter().append("rect")
+  .attr("class","square")
+  .attr("x", function(d) { return d.x; })
+  .attr("y", function(d) { return d.y; })
+  .attr("width", function(d) { return d.width; })
+  .attr("height", function(d) { return d.height; })
+  .style("fill", "white")
+  .style('opacity','0')
+  .style("stroke", "#222")
+  .style("stroke-width", "0.75")
+  .attr('transform',"scale(0.8) translate("+100+","+60+")") //GOOD
+  .on('click', function(d) {
+    var transform;
+    k=2.5;
+    center = {
+      x: 0,
+      y: 0
+      };
+    if(mapzoom='inactive')
+    {
+      center = {
+      x: d.x + d.width / 2,
+      y: d.y + d.height / 2
+      };
+      mapzoom='active'
+      g.transition().duration(1000).attr("transform","translate(" + width / 2 + "," + height / 2 + ")scale(" + k + ")translate(" + -center.x + "," + -center.y + ")");
+    }
+    else
+    {
+      g.transition().duration(1000).attr("transform","translate(" + width / 2 + "," + height / 2 + ")scale(" + k + ")translate(" + -center.x + "," + -center.y + ")");
+    }
+    })
+  .on('dblclick',function(){
+    if(mapzoom='active')
+    {
+      g.transition().duration(1000).attr("transform","translate(" + -width / 2 + "," + -height / 2 + ")scale(" + 1 + ")translate(" + width/2 + "," + height/2 + ")");
+    }
+  }); 
+}
+
+function gridData() {
+    var data = new Array();
+    var xpos = 1; //starting xpos and ypos at 1 so the stroke will show when we make the grid below
+    var ypos = 1;
+    var ncase= 20;
+    // iterate for rows 
+    for (var row = 0; row < ncase; row++) {
+        data.push( new Array() );
+
+        // iterate for cells/columns inside rows
+        for (var column = 0; column < ncase; column++) {
+            data[row].push({
+                x: xpos,
+                y: ypos,
+                width: width/ncase,
+                height: height/ncase
+            })
+            // increment the x position. I.e. move it over by 50 (width variable)
+            xpos += width/ncase;
+        }
+        // reset the x position after a row is complete
+        xpos = 1;
+        // increment the y position for the next row. Move it down 50 (height variable)
+        ypos += height/ncase; 
+    }
+    return data;
+}
+    
+var gridData = gridData(); 
+
+
 initMapSpace();
+buildGrid(gridData);
 data=filterDate(csv);
 data=getdata(data);
 draw(data);
+
+
+
+
 
 document.addEventListener("catEvt", function(e) {
 
@@ -209,26 +296,24 @@ document.addEventListener("catEvt", function(e) {
     data=getdata(data,cat,subcat) 
     //console.log(data)
     draw(data)
+
     //console.log(mapstate,mapsubstate)
-
-
 });
-
 
 document.addEventListener("dayEvt", function(e) {
     console.log('map dayEvt')
     data=filterDate(csv,e.detail)
     data=getdata(data,mapstate,mapsubstate)
     draw(data)
-
 });
 
+document.addEventListener("resetEvt", function(e) {
+  console.log('reset evt')
+  if(mapzoom='active')
+    {
+      g.transition().duration(1000).attr("transform","translate(" + -width / 2 + "," + -height / 2 + ")scale(" + 1 + ")translate(" + width/2 + "," + height/2 + ")");
+    }
+});
 
-
-
-
-function zoom() {
-  g.attr("transform", d3.event.transform);
-}
 
 }
