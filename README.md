@@ -1,48 +1,62 @@
-# 911Vis
+## About 911Vis
 
-Projet de data visualisation pour le cours 'Interactive data visualisation' à l'Ecole Centrale Lyon (2018).
+This project is the final group project for the lesson '[Interactive Data Visualization](https://github.com/LyonDataViz/MOS5.5-Dataviz)' at the Ecole Centrale Lyon (2018). The goal of this project is to build an interactive visualization tool in [D3.js](https://d3js.org/) allowing to explore and highlight interesting properties of a dataset. 
+
+The authors of this project choosed to explore the [Emergency - 911 Calls]( https://www.kaggle.com/mchirico/montcoalert) available on Kaggle, recording more than 260 000 emergency calls in the Montgomery county (PA, USA) between 2015 and 2017. Details are available in [DATA.md](https://github.com/RenonDis/911Vis/blob/master/DATA.md).
+
+**[Click heretosee the final result](https://renondis.github.io/)**
+
+Authors : [Florentin Vallee](https://github.com/RenonDis), [Alexis Collette](https://github.com/AlxClt), [Anouar Mechti]()
+
+## The 911Vis
+
+The 911Vis tool allows you to explore the call distribution in time, space and by category. There are four main visualisations,all linked together.
+
+### The Heatmap
+
+The heat map shows the density of calls per day. The darker it gets, the more 911 has been called!.
+
+IMG NEEDED
+
+The slider down the heatmap gives you the exact number of calls when you hover a day. 
+
+IMG NEEDED
+
+You can select a particular day by clicking it on the heatmap. The other visualisations will be then instantly updated! To goback to the all time visualisation, just click the 'reset' button. 
+
+## The sunburst
+
+The sunburst shows the categorical distribution of the calls. Initially, you can see at the first level the three main categories. At the second level, you can see the subcategories fading out as they become less frequent :
+
+IMGNEEDED
+
+By clicking either on a category or a subcategory, you can filter the visualisation so that you see only the selected items :
+
+IMGNEEDED
+
+If you click again on the category/subcategory, you undo the filtering. 
+
+## The stacked bar chart
+
+The stacked bar chart focuses on the daily call repartition. It shows by hoursthe average number of callsforeach category.
+
+IMGNEEDED
+
+The stacked bar chart is not clickable, however if you filter the visualisation thanks to the sunburst or the heatmap, the bar chart will be updated:
+
+IMGNEEDED
+
+Note that when you select a category on the sunburst, the color scale of the stacked bar chart will be the same than for the sunburst.
+
+## The map
+
+The map shows the geographical repartition of the calls. Note that if there is more than 3000 calls in the selection, the map only displays 3000 randomly selected calls.
+
+IMGNEEDED
+
+You can zoom on the map by clicking on it. Once it is zoomed, you can move by clicking on a non centered part of the map. Double click or press the reset button to zoomout! 
 
 
-## Data
+## Interesting facts
 
-Le Dataset utilisé est disponible sur Kaggle : https://www.kaggle.com/mchirico/montcoalert
-
-Description dans [DATA.md](https://github.com/RenonDis/911Vis/blob/master/DATA.md)
-
-## Problème posé
-
-Quelle est la repartition:
-
-  * Temporelle
-  * Geographique
-  * Catégorielle
-
-Des appels au 911 aux USA entre décembre 2015 et mars 2017?
-
-## Visualisations proposées
-
-Base :
-
-  * Heatmap avec la densité d'appels par jour de l'année
-  * Stacked Bar chart avec nombre moye d'appels par catégorie par heure
-  * Geo Chart avec répartition des appels 
-
-Focus :
-
-  * Pie chart bilevel avec les categories (1er niveau) et les incidents les plus courants par catégorie (second niveau)
-  
-Filtrage :
-
-  * Catégorie (tick box)
-  * Jour (en cliquant sur la heat map)
-
-Autres interactions :
-
-  * Zoom sur la carte au niveau
-    * Etat 
-    * Commune 
-    * Quartier
-  * Reset de la carte + filtrage lorsqu'une autre action de filtrage est engagée 
-  
-**Détail des visualisations (design sheets):** [PROPOSAL.md](https://github.com/RenonDis/911Vis/blob/master/PROPOSAL.md)
-
+## Video presentation
