@@ -4,6 +4,19 @@ This project is the final group project for the lesson '[Interactive Data Visual
 
 The authors of this project choosed to explore the [Emergency - 911 Calls]( https://www.kaggle.com/mchirico/montcoalert) available on Kaggle, recording more than 260 000 emergency calls in the Montgomery county (PA, USA) between 2015 and 2017. Details are available in [DATA.md](https://github.com/RenonDis/911Vis/blob/master/DATA.md).
 
+<table border="0">
+  <tr>
+    <td>
+      <img src="img/doc/montgomery.PNG" style="width: 50px;">
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Montgomery County, PA
+    </td>
+  </tr>
+</table>
+
 **[Click here to see the final result](https://renondis.github.io/)**
 
 Authors : [Florentin Vallee](https://github.com/RenonDis), [Alexis Collette](https://github.com/AlxClt), [Anouar Mechti]()
