@@ -199,9 +199,10 @@ function UpdateSun(date, isHeat) {
   };
 
   arcos.enter().append("path")
+      .style("cursor", "pointer")
+      .classed("clikable", true)
       .attr("stroke", "white")
       .attr("stroke-width", "3px")
-      .classed("clikable", true)
       .style("fill", function(d) {
         if(d.children) {
             return color(d.data.key);
