@@ -6,23 +6,32 @@ The authors of this project choosed to explore the [Emergency - 911 Calls]( http
 
 
 <p align="center">
-   <img src="img/doc/montgomery.PNG" width="50%" />
+   <img src="img/doc/montgomery.PNG" width="33%" />
 </p>
-<p align="center">Montgomery county, PA />
+<p align="center">Montgomery county, PA <p/>
 
-    
+<br/>    
 
 **[Click here to see the final result](https://renondis.github.io/)** (it might take up to 10s to load)
 
 Authors : [Florentin Vallee](https://github.com/RenonDis), [Alexis Collette](https://github.com/AlxClt), [Anouar Mechti]()
 
+<br/>
+
 ## The 911Vis
 
 The 911Vis tool allows you to explore the call distribution in time, space and by category. There are four main visualisations, all linked together.
+<br/>
+<p align="center">
+   <img src="img/doc/general.PNG" width="75%" />
+</p>
+<p align="center"> The beautiful 911Viz! <p/>
+<br/>
 
 ### The Heatmap
 
-The heat map shows the density of calls per day. The darker it gets, the more 911 has been called!.
+The heat map shows the density of calls per day. The darker it gets, the more 911 has been called!
+
 
 <p align="center">
   <img src ="img/doc/heat1.PNG" />
@@ -41,7 +50,7 @@ You can select a particular day by clicking it on the heatmap. The other visuali
 The sunburst shows the categorical distribution of the calls. Initially, you can see at the first level the three main categories. At the second level, you can see the subcategories fading out as they become less frequent. The tooltip you can see on the following figure appears when you hover the sunburst :
 
 <p align="center">
-  <img src ="img/doc/sun1_1.PNG" />
+  <img src ="img/doc/sun1_1.png" />
 </p>
 
 By clicking either on a category or a subcategory, you can filter the visualisation so that you see only the selected items :
@@ -111,12 +120,31 @@ The stacked bar chart is a great tool to spot event patters during the day. We g
   </tr>
 </table>
 
-These pa
+These patterns are quite informative:
 * Traffic accidents occurs more at rush hours
 * Woods and fields fire occurs more around 3pm, when the heat is at its highest.
 * People tend to pass out more in the morning!
 * There are higher chances to be assaulted at night
 
+### Anomalies
 
+Another interesting use of this tool is the detection of unusual patterns.
+
+If you filter the visualisation on 'Traffic: DISABLED VEHICLE' you will see on the heatmap that most of the calls occured on the 23rd of January, 2016 :
+
+<p align="center">
+  <img src ="img/doc/anom1.PNG"  width="75%" />
+</p>
+
+On the map, you can see that it occured all along the County. Why this particular day? A quick research on the web outputs that a [huge blizzard hit the USA on that day](https://en.wikipedia.org/wiki/January_2016_United_States_blizzard), whis is the origin of this anomaly.
+
+Still in the 'Traffic' category, if you filter to ROAD OBSTRUCTION, you see the same kind of anomaly for the 3rd of April, 2016:
+
+<p align="center">
+  <img src ="img/doc/anom2.PNG"  width="75%" />
+</p>
+
+
+This anomaly has been caused by a [storm hitting the state on that day](https://www.nbcphiladelphia.com/weather/stories/Powerful-Wind-Watch-Warning-Philadelphia-South-Jersey-Delaware-Pennsylvania-Power-Outages-Damage-374375501).
 
 ## Video presentation
