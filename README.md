@@ -6,7 +6,7 @@ The authors of this project choosed to explore the [Emergency - 911 Calls]( http
 
 
 <p align="center">
-   <img src="img/doc/montgomery.PNG" width="50%"/>
+   <img src="img/doc/montgomery.PNG" width="50%" />
 </p>
 <p align="center">Montgomery county, PA />
 
@@ -36,7 +36,7 @@ The slider down the heatmap gives you the exact number of calls when you hover a
 
 You can select a particular day by clicking it on the heatmap. The other visualisations will be then instantly updated! To goback to the all time visualisation, just click the 'reset' button. 
 
-## The sunburst
+### The sunburst
 
 The sunburst shows the categorical distribution of the calls. Initially, you can see at the first level the three main categories. At the second level, you can see the subcategories fading out as they become less frequent. The tooltip you can see on the following figure appears when you hover the sunburst :
 
@@ -52,9 +52,9 @@ By clicking either on a category or a subcategory, you can filter the visualisat
 
 If you click again on the category/subcategory, you undo the filtering. 
 
-## The stacked bar chart
+### The stacked bar chart
 
-The stacked bar chart focuses on the daily call repartition. It shows by hoursthe average number of callsforeach category.
+The stacked bar chart focuses on the daily call repartition. It shows by hoursthe average number of callsforeach category. 
 
 <p align="center">
   <img src ="img/doc/bar1.PNG" />
@@ -70,7 +70,7 @@ The stacked bar chart is not clickable, however if you filter the visualisation 
 
 Note that when you select a category on the sunburst, the color scale of the stacked bar chart will be the same than for the sunburst.
 
-## The map
+### The map
 
 The map shows the geographical repartition of the calls. Note that if there is more than 3000 calls in the selection, the map only displays 3000 randomly selected calls.
 
@@ -83,5 +83,40 @@ You can zoom on the map by clicking on it. Once it is zoomed, you can move by cl
 
 
 ## Interesting facts
+
+Let's explore the viz! We will show you some iteresting insight one can draw out of this too
+
+### Patterns
+
+The stacked bar chart is a great tool to spot event patters during the day. We grouped for you some funny/intereting patterns in the following table :
+
+<table border="0">
+  <tr>
+    <td>
+      <p align="center"> Traffic: Vehicle Accident </p>
+      <img src="img/doc/traffic1.PNG" >
+    </td>
+    <td>
+      <p align="center"> Fire: Woods/Fields Fire </p>
+      <img src="img/doc/woods_fields_fire.PNG" >
+    </td>
+    <td>
+      <p align="center"> EMS: Syncopal Episode </p>
+      <img src="img/doc/syncope.PNG" >
+    </td>
+    <td>
+      <p align="center"> EMS: Assault Victim </p>
+      <img src="img/doc/assault.PNG" >
+    </td>
+  </tr>
+</table>
+
+These pa
+* Traffic accidents occurs more at rush hours
+* Woods and fields fire occurs more around 3pm, when the heat is at its highest.
+* People tend to pass out more in the morning!
+* There are higher chances to be assaulted at night
+
+
 
 ## Video presentation
