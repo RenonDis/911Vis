@@ -161,3 +161,6 @@ This anomaly has been caused by a [storm hitting the state on that day](https://
 <br/>
 
 ## Video presentation
+
+
+[![Watch the video](img/doc/Capture.PNG)](https://www.youtube.com/watch?v=fUd9vxav0DI)
